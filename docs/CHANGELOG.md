@@ -1,5 +1,9 @@
 # Changelog
 
+## Warehouse size 1500 → 5000 sq. ft. · 2026-11-21
+
+- Updated every facility-size mention from 1500 to 5000 sq. ft.: home hero, capacity card and facts; warehouse page title, metadata, copy and facts row; root layout description; Facilities Handling fact card; chat desk reply; README. Image `width={1500}` attributes are pixel sizes and were left unchanged.
+
 ## Mobile hero image · 2026-11-21
 
 - `app/components.tsx`: removed the `<source media="(max-width: 760px)">` in `HeroBackground` that swapped the old `truck-at-warehouse.jpeg` in on phones. Mobile now uses the same optimized `neemrana-warehouse-dusk.png` as desktop (verified at 440×956).

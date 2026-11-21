@@ -5,7 +5,7 @@ import { HeroBackground, PhotoFrame, Reveal, type FramePhoto } from "./component
 
 export const metadata: Metadata = {
   title: "Transport Godown in Neemrana | Bhagwan Warehousing",
-  description: "Short-term and transit cargo storage in a 1500 sq. ft. RCC warehouse near Tata RC Motors on NH 48, Neemrana. Call or WhatsApp Bhagwan Warehousing & Dispatch.",
+  description: "Short-term and transit cargo storage in a 5000 sq. ft. RCC warehouse near Tata RC Motors on NH 48, Neemrana. Call or WhatsApp Bhagwan Warehousing & Dispatch.",
 };
 
 const services = [
@@ -36,14 +36,14 @@ export default function Home() {
           <p className="hero-kicker"><span /> Bhagwan Warehousing &amp; Dispatch <span className="kicker-divider">/</span> Neemrana, Rajasthan</p>
           <h1 id="home-title">Transport godown <span>in Neemrana</span></h1>
           <p className="hero-lede">Short-term cargo storage near NH 48.</p>
-          <p className="hero-text">A 1500 sq. ft. RCC warehouse for transporters, truck operators and logistics businesses near Tata RC Motors.</p>
+          <p className="hero-text">A 5000 sq. ft. RCC warehouse for transporters, truck operators and logistics businesses near Tata RC Motors.</p>
           <div className="hero-actions">
             <a className="button button-gold" href="tel:7688866933">Call now <span>76888 66933</span><ArrowUpRight size={17} aria-hidden="true" /></a>
             <a className="button button-glass" href="https://wa.me/917688866933" target="_blank" rel="noreferrer">Enquire on WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a>
           </div>
         </Reveal>
       </div>
-      <div className="hero-bottomline"><span>1500 sq. ft. RCC warehouse</span><span>Near Tata RC Motors · NH 48</span><a href="#warehouse">Explore the facility <ArrowDown size={15} aria-hidden="true" /></a></div>
+      <div className="hero-bottomline"><span>5000 sq. ft. RCC warehouse</span><span>Near Tata RC Motors · NH 48</span><a href="#warehouse">Explore the facility <ArrowDown size={15} aria-hidden="true" /></a></div>
       <span className="hero-index" aria-hidden="true">01 <i /> NEEMRANA</span>
     </section>
 
@@ -52,9 +52,9 @@ export default function Home() {
     <section className="warehouse-showcase" id="warehouse">
       <div className="showcase-heading"><Reveal><p className="section-index">02 / THE WAREHOUSE</p><h2>Space for the<br /><em>in-between.</em></h2></Reveal><Reveal delay={100}><p className="showcase-copy">When a load needs to wait between pickup, delivery or onward dispatch, a practical local warehouse can help your operation stay on track.</p><Link className="text-link" href="/warehouse">Explore our warehouse <ArrowUpRight size={16} aria-hidden="true" /></Link></Reveal></div>
       <Reveal><PhotoFrame photos={facilityPhotos}>
-        <div className="capacity-card"><span className="capacity-mark">BW</span><div><b>1500 sq. ft.</b><span>RCC warehouse · NH 48</span></div></div>
+        <div className="capacity-card"><span className="capacity-mark">BW</span><div><b>5000 sq. ft.</b><span>RCC warehouse · NH 48</span></div></div>
       </PhotoFrame></Reveal>
-      <div className="warehouse-facts"><div><span>Structure</span><b>RCC warehouse</b></div><div><span>Facility size</span><b>1500 sq. ft.</b></div><div><span>Location</span><b>Near NH 48, Neemrana</b></div></div>
+      <div className="warehouse-facts"><div><span>Structure</span><b>RCC warehouse</b></div><div><span>Facility size</span><b>5000 sq. ft.</b></div><div><span>Location</span><b>Near NH 48, Neemrana</b></div></div>
     </section>
 
     <section className="services-section" id="services">

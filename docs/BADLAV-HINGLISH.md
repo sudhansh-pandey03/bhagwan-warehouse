@@ -9,6 +9,26 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 21 Nov 2026 — Warehouse ka size 1500 se 5000 sq. ft. kiya
+
+**Kya badla:**
+- Website par jahan bhi warehouse ka size likha tha, wahan **1500 sq. ft.** ki jagah ab **5000 sq. ft.** likha hai: Home page (hero, card, facts), Warehouse page (title, text, size box), Facilities Handling page, chat assistant ka jawab, aur Google search mein dikhne wala description.
+
+**Kyun:**
+- Owner ne bataya ki asli size 5000 sq. ft. hai.
+
+**Kaun si files:**
+- `app/page.tsx`, `app/warehouse/page.tsx`, `app/layout.tsx`, `app/facilities-handling/_components/facilities-hub.tsx`, `app/facilities-handling/_components/desk-replies.ts`, `README.md`
+
+**Kaise check karein:**
+- Home page aur "Warehouse" page kholiye — har jagah "5000 sq. ft." dikhna chahiye. Chat mein "size" poochiye — jawab mein 5000 aayega.
+
+**Dhyan dene wali baat:**
+- Is file ki purani entries mein "1500" ab bhi likha hai — woh sirf purana record hai, website par nahi dikhta.
+- Google search mein naya size dikhne mein kuch din lag sakte hain.
+
+---
+
 ## 21 Nov 2026 — Mobile par purani background photo hata kar nayi lagayi
 
 **Kya badla:**

@@ -22,7 +22,7 @@ const RULES: { match: RegExp; reply: DeskReply }[] = [
   { match: /\b(load|loading|unload|unloading|equipment|pallet|trolley|drum|drums|labour|labor|handling)\b/i,
     reply: { text: "Cargo handling at the bay can be arranged. On site we have a hand pallet jack and a drum trolley. What are you moving, and how much of it?" } },
   { match: /\b(space|size|big|area|sq|sqft|capacity|available|availability)\b/i,
-    reply: { text: "The godown is a 1500 sq. ft. RCC warehouse. Share your cargo size and dates so the team can confirm space." } },
+    reply: { text: "The godown is a 5000 sq. ft. RCC warehouse. Share your cargo size and dates so the team can confirm space." } },
   { match: /\b(day|days|week|duration|long|din)\b/i,
     reply: { text: "Short-term storage is for about 1–7 days, ideal between pickup, delivery and onward dispatch. Which dates do you need?" } },
   { match: /\b(team|person|human|call me|callback|talk)\b/i,

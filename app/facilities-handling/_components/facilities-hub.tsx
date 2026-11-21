@@ -8,7 +8,7 @@ import { firstName, signOutPartner } from "./partner-session";
 import { TOPICS } from "./facility-topics";
 
 const FACTS = [
-  { icon: Ruler, label: "Space", value: "1500 sq. ft. RCC" },
+  { icon: Ruler, label: "Space", value: "5000 sq. ft. RCC" },
   { icon: MapPin, label: "Location", value: "NH 48 · Neemrana" },
   { icon: Forklift, label: "Equipment", value: "Pallet jack · drum trolley" },
   { icon: Cctv, label: "Security", value: "CCTV on site" },

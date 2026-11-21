@@ -7,7 +7,7 @@ import { LogisticsLoader } from "./logistics-loader";
 
 export const metadata: Metadata = {
   title: { default: "Bhagwan Warehousing & Dispatch | Neemrana", template: "%s | Bhagwan Warehousing" },
-  description: "1500 sq. ft. RCC warehouse for short-term and transit cargo storage near NH 48, Neemrana, Rajasthan. Call Bhagwan Warehousing & Dispatch.",
+  description: "5000 sq. ft. RCC warehouse for short-term and transit cargo storage near NH 48, Neemrana, Rajasthan. Call Bhagwan Warehousing & Dispatch.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -60,7 +60,7 @@ Current responsive hero captures are in `.hallmark/hero-final/`; the five-page d
 
 The home hero uses `public/assets/neemrana-warehouse-dusk.png` as its desktop background and the supplied `truck-at-warehouse.jpeg` on mobile. On desktop, a white truck (`public/warehouse-photos/white-truck-cutout.webp`, cut out and mirrored from a supplied reference image) drives in from the right with a one-time CSS entrance and suspension settle, and its headlight glows switch on as it stops. The background has a subtle scroll parallax. Motion respects `prefers-reduced-motion`. The intro loader still uses the older `truck-arrival-cutout.webp`.
 
-The site retains the verified business details supplied for this business: a 1500 sq. ft. RCC warehouse, near Tata RC Motors on NH 48 in Neemrana, Rajasthan, phone 7688866933, and the existing five storage/handling services. It does not claim specific opening hours, rates, capacity, or availability.
+The site retains the verified business details supplied for this business: a 5000 sq. ft. RCC warehouse, near Tata RC Motors on NH 48 in Neemrana, Rajasthan, phone 7688866933, and the existing five storage/handling services. It does not claim specific opening hours, rates, capacity, or availability.
 
 ## File structure
 
