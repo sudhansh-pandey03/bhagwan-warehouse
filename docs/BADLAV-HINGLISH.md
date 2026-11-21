@@ -9,6 +9,25 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 21 Nov 2026 — Mobile par purani background photo hata kar nayi lagayi
+
+**Kya badla:**
+- Home page ke sabse upar (hero) mobile par abhi bhi **purani truck wali photo** dikh rahi thi, jabki computer par nayi **shaam wali warehouse photo** thi. Ab mobile par bhi wahi nayi photo dikhti hai.
+
+**Kyun:**
+- Code mein ek alag line thi jo chhoti screen (760px se kam) par purani photo `truck-at-warehouse.jpeg` laga deti thi. Woh line hata di.
+
+**Kaun si files:**
+- `app/components.tsx`
+
+**Kaise check karein:**
+- Phone par website kholiye (ya Chrome mein F12 → mobile view). Upar warehouse ki shaam wali photo dikhni chahiye.
+
+**Dhyan dene wali baat:**
+- Agar phone par abhi bhi purani photo dikhe to page ko refresh kariye — browser purani photo yaad rakh sakta hai.
+
+---
+
 ## 21 Nov 2026 — Website ka code GitHub par daala (Vercel par live karne ki taiyari)
 
 **Kya badla:**

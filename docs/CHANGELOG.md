@@ -1,5 +1,9 @@
 # Changelog
 
+## Mobile hero image · 2026-11-21
+
+- `app/components.tsx`: removed the `<source media="(max-width: 760px)">` in `HeroBackground` that swapped the old `truck-at-warehouse.jpeg` in on phones. Mobile now uses the same optimized `neemrana-warehouse-dusk.png` as desktop (verified at 440×956).
+
 ## Published to GitHub for Vercel deploy · 2026-11-21
 
 - Code pushed to the public repo `sudhansh-pandey03/bhagwan-warehouse`. Scanned for secrets first; none found.

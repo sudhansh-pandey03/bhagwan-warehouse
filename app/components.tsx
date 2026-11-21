@@ -75,7 +75,6 @@ export function HeroBackground() {
   }, []);
   return <>
     <picture className="hero-background">
-      <source media="(max-width: 760px)" srcSet="/warehouse-photos/truck-at-warehouse.jpeg" />
       <Image ref={image} className="hero-photo" src="/assets/neemrana-warehouse-dusk.png" alt="" fill priority sizes="100vw" />
     </picture>
     <div className="truck-arrival" aria-hidden="true">
