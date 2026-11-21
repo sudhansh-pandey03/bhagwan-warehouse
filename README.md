@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bhagwan Warehousing & Dispatch
 
-## Getting Started
+Five-page, mobile-friendly website for the Neemrana warehouse. The site focuses on short-term cargo storage enquiries from transporters, truck operators, and logistics businesses.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts: `npm run build`, `npm run start`, and `npm run lint`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Site pages
 
-## Learn More
+- `/` — Home
+- `/warehouse` — Our Warehouse
+- `/services` — Our Services and supplied warehouse photo gallery
+- `/location` — Location and Google Maps embed
+- `/contact` — Contact information and WhatsApp enquiry form
 
-To learn more about Next.js, take a look at the following resources:
+The contact form opens WhatsApp with a prefilled message. The website does not store enquiries in a database. Phone number, WhatsApp links, business details, and shared navigation are maintained in `app/components.tsx`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## shadcn/ui
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The project uses [shadcn/ui](https://ui.shadcn.com/docs/installation/next) with the Nova style, Base UI primitives, Tailwind CSS 4, and the `@/*` import alias. The full component set available to this project was added with the shadcn CLI `add --all` command. The generated components are editable source files in `components/ui/`.
 
-## Deploy on Vercel
+### Components added
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Accordion, Alert, Alert Dialog, Aspect Ratio, Attachment, Avatar, Badge, Breadcrumb, Bubble, Button, Button Group, Calendar, Card, Carousel, Chart, Checkbox, Code Block, Collapsible, Combobox, Command, Context Menu, Dialog, Direction, Drawer, Dropdown Menu, Empty, Field, Hover Card, Input, Input Group, Input OTP, Item, Kbd, Label, Marker, Menubar, Message, Message Scroller, Native Select, Navigation Menu, Pagination, Popover, Progress, Questionnaire, Radio Group, Resizable, Scroll Area, Select, Separator, Sheet, Sidebar, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, and Trace.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The CLI also added `use-highlighted-code`, `use-mobile`, and the `highlighter` helper used by code display components.
+
+### Used in the website
+
+The WhatsApp enquiry form uses the shadcn Button, Input, Label, Native Select, and Textarea components. `TooltipProvider` is installed at the root layout so tooltip components are ready to use. shadcn theme tokens map primary, secondary, and focus colors to the site's navy and yellow palette.
+
+### Add or update components
+
+From this directory:
+
+```bash
+npx shadcn@latest add <component-name>
+npx shadcn@latest add --all
+```
+
+`components.json` controls the generator aliases and CSS location. Shared class utilities live in `lib/utils.ts`.
+
+## Design system
+
+The site uses the requested premium industrial palette: warm beige `#E8DCC8`, cream `#F5F0E6`, dark maroon `#521C2D`, deep burgundy `#3B1422`, navy `#102638`, muted gold `#D6A84F`, and white. Beige and cream anchor the light sections; maroon and navy define the brand and dark sections; gold marks key actions.
+
+The home hero and warehouse pages use the supplied photographs under `public/warehouse-photos/`. The navigation is glass styled over the homepage hero and becomes a solid cream bar on scroll. It includes an animated mobile menu, active route indication, and direct call action. Scroll reveals, hover states, and the subtle hero photo parallax use CSS and lightweight browser APIs, with reduced-motion support. No additional motion dependency was added.
+
+Design tokens live in `app/tokens.css`, shared accessibility and baseline rules in `app/base.css`, and page/component styles in `app/globals.css`. The reusable client helpers for navigation, hero parallax, and reveal-on-scroll are in `app/components.tsx`.
+
+Current responsive hero captures are in `.hallmark/hero-final/`; the five-page desktop and phone captures are in `.hallmark/premium/`.
+
+The home hero uses `public/assets/neemrana-warehouse-dusk.png` as its desktop background and the supplied `truck-at-warehouse.jpeg` on mobile. On desktop, a white truck (`public/warehouse-photos/white-truck-cutout.webp`, cut out and mirrored from a supplied reference image) drives in from the right with a one-time CSS entrance and suspension settle, and its headlight glows switch on as it stops. The background has a subtle scroll parallax. Motion respects `prefers-reduced-motion`. The intro loader still uses the older `truck-arrival-cutout.webp`.
+
+The site retains the verified business details supplied for this business: a 1500 sq. ft. RCC warehouse, near Tata RC Motors on NH 48 in Neemrana, Rajasthan, phone 7688866933, and the existing five storage/handling services. It does not claim specific opening hours, rates, capacity, or availability.
+
+## File structure
+
+See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for the route and asset map, common update locations, and sitemap configuration. Project changes are recorded in [docs/CHANGELOG.md](./docs/CHANGELOG.md).
+
+## SEO deployment setup
+
+Set `NEXT_PUBLIC_SITE_URL` to the canonical origin for the domain you own before deployment. `app/sitemap.ts` and `app/robots.ts` use this value to publish the sitemap URL. Google Search Console verification and Google Business Profile linking must be completed using the business's own Google accounts after a domain is configured.
