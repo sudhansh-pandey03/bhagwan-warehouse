@@ -9,6 +9,27 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 21 Nov 2026 — Website ka code GitHub par daala (Vercel par live karne ki taiyari)
+
+**Kya badla:**
+- Poora website code ab GitHub par hai: https://github.com/sudhansh-pandey03/bhagwan-warehouse (public — koi bhi code dekh sakta hai).
+- `.gitignore` mein `.agents/`, `.claude/`, `.hallmark/` folders daale — yeh design ke tools aur screenshots hain, website ke liye zaroori nahi, isliye GitHub par nahi gaye.
+
+**Kyun:**
+- Vercel (website chalane wali free service) GitHub se code leti hai. Ab har baar GitHub par naya code jaane par website apne aap update ho jayegi.
+
+**Kaun si files:**
+- `.gitignore`, `docs/BADLAV-HINGLISH.md`, `docs/CHANGELOG.md`
+
+**Kaise check karein:**
+- Upar wala GitHub link kholiye — saari files dikhengi.
+
+**Dhyan dene wali baat:**
+- Code mein koi password ya secret nahi hai (check kiya). Phone number pehle se website par public hai.
+- Vercel par ek setting zaroor daalein: `NEXT_PUBLIC_SITE_URL` = `https://www.bhagwantransport.com` (isse Google ke liye sitemap banta hai).
+
+---
+
 ## 21 Nov 2026 — Shuru wali loading screen par atak jaane wali galti theek ki
 
 **Kya badla:**

@@ -1,5 +1,11 @@
 # Changelog
 
+## Published to GitHub for Vercel deploy · 2026-11-21
+
+- Code pushed to the public repo `sudhansh-pandey03/bhagwan-warehouse`. Scanned for secrets first; none found.
+- `.gitignore` now excludes `/.agents/`, `/.claude/`, `/.hallmark/` (local design tooling and screenshots).
+- Production build passes (`next build`, Next 16.4.6). Required env on the host: `NEXT_PUBLIC_SITE_URL=https://www.bhagwantransport.com` (enables `sitemap.xml` entries and the robots sitemap line). Optional: `NEXT_PUBLIC_PARTNER_API_URL` (without it, partner requests go to WhatsApp).
+
 ## Intro loader stuck fix · 2026-11-21
 
 - `app/logistics-loader.tsx`: the loader could stay on screen forever on first visit. The effect wrote the `bhagwan-intro-seen` sessionStorage flag before scheduling the close. Under React Strict Mode (dev), cleanup cancelled the timers and the second effect run saw the flag and returned early, so the loader never closed. The flag is now written only when the loader closes, and all timers (including the reduced-motion and fade-out ones) are tracked and cleared on cleanup.
