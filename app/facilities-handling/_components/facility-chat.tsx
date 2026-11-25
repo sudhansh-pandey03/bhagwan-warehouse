@@ -14,6 +14,8 @@ const WHATSAPP_NUMBER = "917688866933";
 const storageKey = (topic: Topic) => `bw-chat:${topic.id}`;
 const newId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const timeLabel = (at: number) => new Intl.DateTimeFormat("en-IN", { hour: "numeric", minute: "2-digit" }).format(at);
+/** Saved chats come back from localStorage, so only allow link types the desk itself uses (never `javascript:`). */
+const safeHref = (href: string) => /^(https:\/\/|tel:)/i.test(href);
 
 function welcome(partner: Partner, topic: Topic): Message[] {
   return [{ id: newId(), from: "desk", at: Date.now(),
@@ -140,7 +142,7 @@ function Conversation({ partner, topic }: { partner: Partner; topic: Topic }) {
         : <div key={m.id} className="fh-msg" data-from={m.from}>
           <div className="fh-bubble">
             <p>{m.text}</p>
-            {m.action && <a className="fh-bubble-action" href={m.action.href} target={m.action.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{m.action.label} <ArrowUpRight size={14} aria-hidden="true" /></a>}
+            {m.action && safeHref(m.action.href) && <a className="fh-bubble-action" href={m.action.href} target={m.action.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{m.action.label} <ArrowUpRight size={14} aria-hidden="true" /></a>}
           </div>
           <time dateTime={new Date(m.at).toISOString()}>{m.from === "me" ? "You" : "Desk"} · {timeLabel(m.at)}</time>
         </div>)}

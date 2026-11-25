@@ -9,6 +9,27 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 25 Nov 2026 — Security check (14 points) aur chat link ki suraksha
+
+**Kya badla:**
+- Poori website ko 14 common security galtiyon ke liye check kiya (admin page, dusre logon ka data, secret keys, price, cart, payment, coupon, login, AI chat, script attack, upload, .env, SQL). Website par na database hai, na payment, na login server, na AI — isliye zyada tar khatre yahan lagu hi nahi hote.
+- Chat mein ek chhoti suraksha joda: chat ke button-link ab sirf `https://` ya `tel:` wale hi dikhenge. Koi browser mein save hui chat badal kar "javascript:" link daale, toh woh button nahi banega.
+
+**Kyun:**
+- Owner ne security audit maanga tha. Purani chat browser (localStorage) se wapas load hoti hai, isliye usme likhe link par aankh band karke bharosa nahi karna chahiye.
+
+**Kaun si files:**
+- `app/facilities-handling/_components/facility-chat.tsx`
+
+**Kaise check karein:**
+- Chat kholiye, "rates" ya "location" poochiye — "Call" aur "Open Google Maps" button pehle jaise hi dikhne chahiye.
+
+**Dhyan dene wali baat:**
+- `app/authentiaction/app.js` ek adhoora Express login code hai — website mein juda nahi hai, aur GitHub par bhi nahi gaya. Agar kabhi asli login banayein, toh password/OTP par rate limit, server par admin check, aur SQL mein parameter wali query zaroor lagaiye.
+- Service Partner "sign in" asli login nahi hai (sirf browser mein naam yaad rakhta hai). Isme koi private data nahi hai, isliye abhi theek hai — lekin iske peeche kabhi private cheez mat rakhiye.
+
+---
+
 ## 21 Nov 2026 — Warehouse ka size 1500 se 5000 sq. ft. kiya
 
 **Kya badla:**

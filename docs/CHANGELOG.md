@@ -1,5 +1,11 @@
 # Changelog
 
+## Security audit (14 checks) · 2026-11-25
+
+- Audited for: admin auth, IDOR, client-exposed secrets, client-trusted prices, negative quantities, unverified payment webhooks, coupon reuse, self-assigned admin roles, login/2FA rate limits, prompt injection, XSS, upload type checks, committed secrets, SQL injection. The site has no backend, database, payments, uploads, or LLM, so most don't apply. No secrets in git history; `.env*` is gitignored.
+- `app/facilities-handling/_components/facility-chat.tsx`: chat action links are rehydrated from localStorage, so they now render only when the href is `https://` or `tel:` (blocks a `javascript:` href planted in storage).
+- Note: untracked `app/authentiaction/app.js` is an unwired Express stub (missing routes file, `ApiError` undefined, `express`/`cookie-parser` not installed). If it becomes real auth, it needs rate limiting, server-side role checks, and parameterized queries.
+
 ## Warehouse size 1500 → 5000 sq. ft. · 2026-11-21
 
 - Updated every facility-size mention from 1500 to 5000 sq. ft.: home hero, capacity card and facts; warehouse page title, metadata, copy and facts row; root layout description; Facilities Handling fact card; chat desk reply; README. Image `width={1500}` attributes are pixel sizes and were left unchanged.
