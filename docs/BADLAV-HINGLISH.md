@@ -9,6 +9,33 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 25 Nov 2026 — Login ka database MongoDB se Neon (PostgreSQL) par shift
+
+**Kya badla:**
+- Users aur login ka data ab **MongoDB ki jagah Neon PostgreSQL** mein save hota hai.
+- Database ki tables (users, rate limit) **pehli request par apne aap ban jaati hain** — Neon mein kuch alag se banana nahi padega.
+- Setting ka naam badla: `MONGODB_URI` hata diya, ab **`DATABASE_URL`** chahiye.
+- Website par dikhne wala kuch nahi badla — Sign in, Register, Facilities Handling sab pehle jaise.
+
+**Kyun:**
+- Live website par sign in "Something went wrong" (500 error) de raha tha. Owner Neon use karna chahte hain, MongoDB nahi.
+
+**Kaun si files:**
+- `lib/server/common/config/db.ts`, `lib/server/module/auth/auth.model.ts`, `auth.service.ts`, `auth.middleware.ts`, `lib/server/common/middleware/rate-limit.middleware.ts`, `error.middleware.ts`, `lib/server/common/config/env.ts`, `.env.example`, `package.json`
+- Naya: `lib/server/schema.sql` (tables ka naksha, sirf dekhne/manual setup ke liye)
+
+**Kaise check karein:**
+1. Vercel → Storage / Integrations se Neon jodiye (ya Neon dashboard se "pooled" connection string copy kijiye).
+2. Vercel → Settings → Environment Variables mein `DATABASE_URL` daaliye (Neon integration khud daal deta hai). Purana `MONGODB_URI` hata dijiye.
+3. Baaki settings (`CLIENT_URL`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `SMTP_...`) bhi hone chahiye.
+4. Redeploy kijiye, phir `/register` par account banaiye.
+
+**Dhyan dene wali baat:**
+- Admin banana: Neon ke SQL Editor mein chalaiye — `UPDATE users SET role = 'admin' WHERE email = 'aapka@email.com';`
+- Agar ab bhi "Something went wrong" aaye, toh Vercel ke Logs mein `[api] Unhandled error` wali line dekhiye — usme asli wajah likhi hoti hai.
+
+---
+
 ## 25 Nov 2026 — Facilities Handling ke liye asli login (email + password)
 
 **Kya badla:**

@@ -1,8 +1,7 @@
 import "server-only";
-import { connectDB } from "../../common/config/db";
 import { ApiError } from "../../common/utils/api-error";
 import { verifyAccessToken } from "../../common/utils/jwt.utils";
-import { User } from "./auth.model";
+import { findForAuth } from "./auth.model";
 import type { Role } from "./auth.roles";
 
 export type AuthUser = { id: string; role: Role; name: string; email: string };
@@ -17,8 +16,7 @@ export async function authenticate(request: Request): Promise<AuthUser> {
   if (scheme !== "Bearer" || !token) throw ApiError.unauthorized("Please sign in to continue");
 
   const payload = verifyAccessToken(token); // throws JWT errors -> 401
-  await connectDB();
-  const user = await User.findById(payload.id).select("+passwordChangedAt");
+  const user = await findForAuth(payload.id);
   if (!user) throw ApiError.unauthorized("This account no longer exists");
   if (user.passwordChangedAt && (payload.iat ?? 0) < Math.floor(user.passwordChangedAt.getTime() / 1000)) {
     throw ApiError.unauthorized("Your password was changed, please sign in again");

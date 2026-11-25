@@ -11,7 +11,8 @@ export function errorResponse(error: unknown): NextResponse {
   const name = (error as { name?: string })?.name;
   if (name === "TokenExpiredError") return fail(401, "Your session has expired, please sign in again");
   if (name === "JsonWebTokenError" || name === "NotBeforeError") return fail(401, "Invalid token");
-  if ((error as { code?: number })?.code === 11000) return fail(409, "An account with this email already exists");
+  // PostgreSQL unique_violation: the only unique column users can hit is the email.
+  if ((error as { code?: string })?.code === "23505") return fail(409, "An account with this email already exists");
 
   console.error("[api] Unhandled error:", error);
   return fail(500, "Something went wrong, please try again");

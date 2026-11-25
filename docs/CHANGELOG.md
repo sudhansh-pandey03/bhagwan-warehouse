@@ -1,5 +1,15 @@
 # Changelog
 
+## Auth database: MongoDB → Neon PostgreSQL · 2026-11-25
+
+- Replaced Mongoose with `pg` (node-postgres). `lib/server/common/config/db.ts` holds one pool per instance (max 5; use Neon's `-pooler` URL) and runs an idempotent `CREATE TABLE IF NOT EXISTS` schema once per instance before the first query. The same DDL is in `lib/server/schema.sql`.
+- `auth.model.ts` is now a small query module: explicit `PUBLIC_COLUMNS` and `toPublicUser` keep the password and token columns out of every response; ids are UUIDs (`gen_random_uuid()`), validated before querying.
+- Token flows are single atomic statements: verify-email, reset-password and refresh-token rotation use `UPDATE … WHERE token = $hash AND expires > now() RETURNING`, so a token can't be used twice by racing requests. Password hashing moved from a Mongoose hook to `hashPassword()` in the service.
+- Rate limit uses `INSERT … ON CONFLICT DO UPDATE SET count = count + 1 RETURNING count`, with occasional cleanup of expired windows.
+- Error handler maps PostgreSQL `23505` (unique violation) to 409 instead of Mongo `11000`.
+- Env: `MONGODB_URI` → `DATABASE_URL` (the name the Vercel Neon integration sets). Removed `mongoose`; added `pg`, `@types/pg`.
+- Verified: build passes; the same 37 API checks and 17 headless-Chrome checks pass against PostgreSQL (PGlite).
+
 ## Email + password authentication for Facilities Handling · 2026-11-25
 
 - Replaced the browser-only Service Partner "sign in" (localStorage, no password) with real accounts: Next.js route handlers under `app/api/auth/*` backed by MongoDB (Mongoose 9), bcryptjs (cost 12), jsonwebtoken (HS256, separate access/refresh secrets), Joi DTOs and nodemailer.

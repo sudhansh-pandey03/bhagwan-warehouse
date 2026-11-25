@@ -9,7 +9,7 @@ import "server-only";
  * The marketing pages never import this, so they stay up even if auth isn't configured yet.
  */
 const REQUIRED = [
-  "MONGODB_URI",
+  "DATABASE_URL",
   "CLIENT_URL",
   "JWT_ACCESS_SECRET",
   "JWT_REFRESH_SECRET",
@@ -22,7 +22,7 @@ const REQUIRED = [
 export type Env = {
   NODE_ENV: string;
   isProduction: boolean;
-  MONGODB_URI: string;
+  DATABASE_URL: string;
   CLIENT_URL: string;
   JWT_ACCESS_SECRET: string;
   JWT_ACCESS_EXPIRES: string;
@@ -61,7 +61,7 @@ export function env(): Env {
   cached = {
     NODE_ENV,
     isProduction: NODE_ENV === "production",
-    MONGODB_URI: process.env.MONGODB_URI!,
+    DATABASE_URL: process.env.DATABASE_URL!,
     CLIENT_URL: process.env.CLIENT_URL!.replace(/\/+$/, ""),
     JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET!,
     JWT_ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES || "15m",
