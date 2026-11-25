@@ -1,0 +1,20 @@
+/* Sign-in pages. They reuse the glass card (sp-*) and dark shell (fh-*); this only adds the bits they lack. */
+.auth-shell { padding-top:140px; }
+.auth-card { animation:sp-pop .36s cubic-bezier(.2,.8,.2,1) both; }
+.auth-links { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 18px; margin-top:18px; font-size:13.5px; }
+.auth-links-center { justify-content:center; }
+.auth-link { color:var(--yellow); font-weight:700; text-decoration:none; background:none; border:0; padding:0; font:inherit; font-size:inherit; cursor:pointer; }
+.auth-link:hover { text-decoration:underline; }
+.auth-link:focus-visible { outline:2px solid var(--yellow); outline-offset:3px; border-radius:4px; }
+.auth-muted { color:var(--color-muted-on-dark); }
+.auth-hint { margin:8px 2px 0; color:rgb(232 220 200 / 62%); font-size:12.5px; line-height:1.5; }
+.auth-done { display:grid; justify-items:center; text-align:center; }
+.auth-done .sp-badge { margin-bottom:16px; }
+.auth-done .sp-primary { text-decoration:none; }
+.auth-row-end { display:flex; justify-content:flex-end; margin-top:10px; font-size:13px; }
+
+@media (max-width: 480px) {
+  .auth-shell { padding:110px 12px 48px; }
+  .auth-card { padding:30px 20px 22px; border-radius:20px; }
+}
+@media (prefers-reduced-motion: reduce) { .auth-card { animation:none; } }

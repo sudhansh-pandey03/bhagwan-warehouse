@@ -9,6 +9,38 @@ Is file mein website mein kiya gaya **har badlav** simple bhasha mein likha jaye
 
 ---
 
+## 25 Nov 2026 — Facilities Handling ke liye asli login (email + password)
+
+**Kya badla:**
+- Pehle "Service Partner" button sirf naam/email/mobile poochkar browser mein yaad rakh leta tha — koi bhi andar ja sakta tha. Ab **asli account** banta hai: email + password, aur email verify karna zaroori hai.
+- Naye pages: **Sign in** (`/login`), **Account banaiye** (`/register`), **Email verify** (email ke link se), **Password bhool gaye** (`/forgot-password`), **Naya password** (email ke link se).
+- Facilities Handling aur uski chat ab sirf sign in kiye hue partner ko dikhti hai. Bina sign in → seedha Sign in page, aur sign in ke baad wapas wahin.
+- Header ka "Service Partner" button ab Sign in page kholta hai; sign in ke baad "Hi, (naam)" dikhata hai.
+- Password ke rule: kam se kam 8 akshar, ek capital letter aur ek number.
+- Galat password baar-baar daalne par 15 minute ka rok (10 koshish ke baad).
+- Password reset karne par har device se apne aap sign out ho jata hai.
+- Users ka data **MongoDB Atlas** mein rahega (password kabhi seedha save nahi hota, sirf uska "hash").
+- Purana adhoora Express code (`app/authentiaction/`) hata diya.
+
+**Kyun:**
+- Owner ne Facilities Handling par asli authentication maanga.
+
+**Kaun si files:**
+- Naye: `app/api/auth/...` (9 API), `lib/server/...` (server ka saara login code), `lib/auth-client/api.ts`, `components/auth/...`, `app/login`, `app/register`, `app/verify-email`, `app/forgot-password`, `app/reset-password`, `instrumentation.ts`, `.env.example`
+- Badle: `app/layout.tsx`, `components/home/service-partner.tsx`, `app/facilities-handling/_components/facilities-hub.tsx`, `facility-chat.tsx`, `.gitignore`, `package.json`, `PROJECT_STRUCTURE.md`
+- Hataye: purana sign-in form (`partner-sign-in-form.tsx`, `partner-api.ts`, `partner-validation.ts`, `glass-dialog.tsx`, `partner-gate.tsx`, `partner-session.ts`)
+
+**Kaise check karein:**
+- Pehle settings bhariye (neeche dekhiye). Phir `npm run dev`, "Service Partner" dabaiye → "Create an account" → email mein aaya link kholiye → sign in → Facilities Handling khulega.
+
+**Dhyan dene wali baat:**
+- **Bina settings ke login nahi chalega** (baaki website chalti rahegi). Vercel → Settings → Environment Variables mein yeh daalne hain: `MONGODB_URI`, `CLIENT_URL`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM_NAME`, `SMTP_FROM_EMAIL`. Poori list aur samjhaane wali baatein `.env.example` mein hain.
+- Gmail se email bhejne ke liye normal password nahi, Google ka **"App password"** chahiye.
+- Admin banana ho toh MongoDB mein us user ka `role` haath se `admin` kariye — website se koi khud admin nahi ban sakta.
+- Jo log pehle purane form se "sign in" the, unhe ab naya account banana hoga.
+
+---
+
 ## 25 Nov 2026 — Security check (14 points) aur chat link ki suraksha
 
 **Kya badla:**

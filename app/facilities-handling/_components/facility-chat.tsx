@@ -3,15 +3,18 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Check, Headset, SendHorizontal, Trash2 } from "lucide-react";
-import { PartnerGate } from "./partner-gate";
-import { firstName, type Partner } from "./partner-session";
+import { firstName } from "@/components/auth/auth-provider";
+import { ProtectedRoute } from "@/components/auth/protected-route";
+import type { AuthUser } from "@/lib/auth-client/api";
 import { TOPICS, topicById, type Topic } from "./facility-topics";
 import { deskReply, type DeskReply } from "./desk-replies";
 
+type Partner = AuthUser;
 type Message = { id: string; from: "me" | "desk" | "note"; text: string; at: number; action?: DeskReply["action"] };
 
 const WHATSAPP_NUMBER = "917688866933";
-const storageKey = (topic: Topic) => `bw-chat:${topic.id}`;
+/** Per user and topic, so two people sharing a device never see each other's chats. */
+const storageKey = (partner: Partner, topic: Topic) => `bw-chat:${partner.id}:${topic.id}`;
 const newId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const timeLabel = (at: number) => new Intl.DateTimeFormat("en-IN", { hour: "numeric", minute: "2-digit" }).format(at);
 /** Saved chats come back from localStorage, so only allow link types the desk itself uses (never `javascript:`). */
@@ -24,7 +27,7 @@ function welcome(partner: Partner, topic: Topic): Message[] {
 
 function loadMessages(partner: Partner, topic: Topic): Message[] {
   try {
-    const saved = JSON.parse(window.localStorage.getItem(storageKey(topic)) ?? "null");
+    const saved = JSON.parse(window.localStorage.getItem(storageKey(partner, topic)) ?? "null");
     if (Array.isArray(saved) && saved.length) return saved as Message[];
   } catch { /* ignore bad or blocked storage */ }
   return welcome(partner, topic);
@@ -33,12 +36,12 @@ function loadMessages(partner: Partner, topic: Topic): Message[] {
 /** Chat page: topic list on the side, conversation with the dispatch desk in the middle. */
 export function FacilityChat({ topicId }: { topicId?: string }) {
   const topic = topicById(topicId);
-  return <PartnerGate>{(partner) => <div className="fh-shell fh-shell-chat">
+  return <ProtectedRoute roles={["partner", "admin"]}>{(partner) => <div className="fh-shell fh-shell-chat">
     <div className="fh-chat-layout">
       <TopicList current={topic} />
       <Conversation key={topic.id} partner={partner} topic={topic} />
     </div>
-  </div>}</PartnerGate>;
+  </div>}</ProtectedRoute>;
 }
 
 function TopicList({ current }: { current: Topic }) {
@@ -74,8 +77,8 @@ function Conversation({ partner, topic }: { partner: Partner; topic: Topic }) {
 
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), []);
   useEffect(() => {
-    try { window.localStorage.setItem(storageKey(topic), JSON.stringify(messages.slice(-200))); } catch { /* storage full or blocked */ }
-  }, [messages, topic]);
+    try { window.localStorage.setItem(storageKey(partner, topic), JSON.stringify(messages.slice(-200))); } catch { /* storage full or blocked */ }
+  }, [messages, partner, topic]);
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
@@ -102,9 +105,9 @@ function Conversation({ partner, topic }: { partner: Partner; topic: Topic }) {
   function sendToTeam() {
     const mine = messages.filter((m) => m.from === "me").map((m) => `• ${m.text}`);
     const text = [
-      `Hello, this is ${partner.fullName} (Service Partner).`,
+      `Hello, this is ${partner.name} (Service Partner).`,
       `Topic: ${topic.name}`,
-      partner.mobile ? `Mobile: +91 ${partner.mobile}` : `Email: ${partner.email}`,
+      `Email: ${partner.email}`,
       "",
       ...(mine.length ? mine : ["I would like to discuss this requirement."]),
     ].join("\n");

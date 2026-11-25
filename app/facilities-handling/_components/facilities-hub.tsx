@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ArrowUpRight, Cctv, Forklift, LogOut, MapPin, MessageCircle, Ruler } from "lucide-react";
-import { PartnerGate } from "./partner-gate";
-import { firstName, signOutPartner } from "./partner-session";
+import { firstName, useAuth } from "@/components/auth/auth-provider";
+import { ProtectedRoute } from "@/components/auth/protected-route";
 import { TOPICS } from "./facility-topics";
 
 const FACTS = [
@@ -14,10 +13,10 @@ const FACTS = [
   { icon: Cctv, label: "Security", value: "CCTV on site" },
 ];
 
-/** Facilities Handling home for a signed-in Service Partner. */
+/** Facilities Handling home for a signed-in Service Partner (or admin). */
 export function FacilitiesHub() {
-  const router = useRouter();
-  return <PartnerGate>{(partner) => <div className="fh-shell">
+  const { logout } = useAuth();
+  return <ProtectedRoute roles={["partner", "admin"]}>{(partner) => <div className="fh-shell">
     <div className="fh-wrap">
       <header className="fh-hero">
         <div>
@@ -27,7 +26,7 @@ export function FacilitiesHub() {
         </div>
         <div className="fh-hero-actions">
           <Link className="fh-btn fh-btn-gold" href="/facilities-handling/chat"><MessageCircle size={17} aria-hidden="true" /> Open chat</Link>
-          <button type="button" className="fh-btn fh-btn-glass" onClick={() => { signOutPartner(); router.push("/"); }}><LogOut size={16} aria-hidden="true" /> Sign out</button>
+          <button type="button" className="fh-btn fh-btn-glass" onClick={() => void logout()}><LogOut size={16} aria-hidden="true" /> Sign out</button>
         </div>
       </header>
 
@@ -48,5 +47,5 @@ export function FacilitiesHub() {
         </div>
       </section>
     </div>
-  </div>}</PartnerGate>;
+  </div>}</ProtectedRoute>;
 }

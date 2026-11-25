@@ -1,5 +1,19 @@
 # Changelog
 
+## Email + password authentication for Facilities Handling · 2026-11-25
+
+- Replaced the browser-only Service Partner "sign in" (localStorage, no password) with real accounts: Next.js route handlers under `app/api/auth/*` backed by MongoDB (Mongoose 9), bcryptjs (cost 12), jsonwebtoken (HS256, separate access/refresh secrets), Joi DTOs and nodemailer.
+- Server layers in `lib/server/` mirror an Express layout: `common/{config,utils,dto,middleware}` and `module/auth/{model,service,controller,middleware,cookie,routes,roles,dto}`. `withErrorHandler` is the global error handler (ApiError, JWT errors → 401, Mongo 11000 → 409, else logged 500); `app/api/[...path]` returns JSON 404s.
+- Endpoints: register, verify-email/:token, resend-verification, login, refresh-token (rotation + reuse detection), logout, forgot-password, reset-password/:token (clears refresh token and sets `passwordChangedAt`, which invalidates outstanding access tokens), me.
+- Refresh cookie `bw_refresh`: httpOnly, `Secure` in production, SameSite from `COOKIE_SAMESITE` (default strict), `Path=/api/auth`, 7 days; the same options set and clear it. A non-secret `bw_signed_in` hint cookie lets the client skip the silent refresh for visitors who never signed in.
+- Rate limit (10 / 15 min / IP) on login, register, forgot-password, resend-verification and reset-password, stored in MongoDB (TTL index) because serverless instances don't share memory. Relies on `x-forwarded-for`, which Vercel sets; behind another proxy make sure it overwrites that header.
+- Roles: `partner` (default; the only self-selectable role) and `admin` (set in the DB). Login does a dummy bcrypt compare for unknown emails to equalise timing.
+- Frontend: access token held in module memory (`lib/auth-client/api.ts`), `credentials: "include"`, single shared refresh on 401 then retry; `AuthProvider` in the root layout restores the session on load; `ProtectedRoute` with optional roles wraps the Facilities Handling hub and chat. Pages: `/login` (safe `?next=`), `/register`, `/verify-email/[token]`, `/forgot-password`, `/reset-password/[token]` (the token pages use `export const instant = false` because the shared header reads the pathname).
+- Chat history in localStorage is now keyed per user (`bw-chat:{userId}:{topic}`); legacy `bw-partner` and unscoped `bw-chat:{topic}` keys are removed on load.
+- Removed: `partner-sign-in-form.tsx`, `partner-api.ts`, `partner-validation.ts`, `glass-dialog.tsx`, `partner-gate.tsx`, `partner-session.ts`, the untracked `app/authentiaction/` Express stub, and the `NEXT_PUBLIC_PARTNER_API_URL` option.
+- `instrumentation.ts` logs missing/invalid auth env vars at startup; `env()` throws on first auth request if they're missing (the public site keeps working). `.env.example` added (and un-ignored).
+- Verified: `next build` passes; 37 API checks and 17 headless-Chrome UI checks against an in-memory MongoDB and a local SMTP catcher.
+
 ## Security audit (14 checks) · 2026-11-25
 
 - Audited for: admin auth, IDOR, client-exposed secrets, client-trusted prices, negative quantities, unverified payment webhooks, coupon reuse, self-assigned admin roles, login/2FA rate limits, prompt injection, XSS, upload type checks, committed secrets, SQL injection. The site has no backend, database, payments, uploads, or LLM, so most don't apply. No secrets in git history; `.env*` is gitignored.
